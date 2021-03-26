@@ -79,11 +79,11 @@ def reduce_volume():
     print(e)  
     song_title_label.config(fg="red",text="track hasn't been selected yet")
 
-Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song)
-Button2 = tk.Button(master, text="pause", font=("calibri",12), command=pause)
-Button3 = tk.Button(master, text="resume", font=("calibri",12), command=unpause)
-Button4 = tk.Button(master, text="-", font=("calibri",12),width=5, command=reduce_volume)
-Button5 = tk.Button(master, text="+", font=("calibri",12),width=5, command=increase_volume)
+Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song,activebackground="blue")
+Button2 = tk.Button(master, text="pause", font=("calibri",12), command=pause,activebackground="red")
+Button3 = tk.Button(master, text="resume", font=("calibri",12), command=unpause,activebackground="green")
+Button4 = tk.Button(master, text="-", font=("calibri",12),width=5, command=reduce_volume,activebackground="orange")
+Button5 = tk.Button(master, text="+", font=("calibri",12),width=5, command=increase_volume,activebackground="orange")
 
 Label1 = tk.Label(master,text="CUSTOM MUSIC PLAYER",font=("calibri",15),fg="green")
 Label2 = tk.Label(master,text="Select your music track please",font=("calibri",16),fg="blue")
