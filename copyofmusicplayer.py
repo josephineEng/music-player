@@ -66,7 +66,7 @@ def nextsong():
   pygame.mixer.music.play()
 
 def previous(): 
-  global index
+  global index 
   index -= 1
   pygame.mixer.music.load(play_list[index])
   var.set(play_list[index])

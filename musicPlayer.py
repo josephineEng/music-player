@@ -1,6 +1,6 @@
+import tkinter as tk
 from tkinter.constants import ACTIVE, END, GROOVE, VERTICAL
 from pygame import mixer
-import tkinter as tk
 from tkinter import LabelFrame, Scrollbar, StringVar, Tk
 from tkinter import Label
 from tkinter import Button
