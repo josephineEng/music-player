@@ -27,10 +27,7 @@ song_list = os.listdir()
 play_list = tk.Listbox(master, font=("Helvetica", 12, "bold"), bg="green", selectmode=tk.SINGLE)
 
 for song in song_list:
-  pos = 0
-  if pos == 0:
-    play_list.insert(pos, song)
-    pos += 1
+  play_list.insert(END, song)
 
 pygame.init()
 pygame.mixer.init()
@@ -61,9 +58,8 @@ def increase_volume():
     mixer.music.set_volume(current_volume)
     volume_label.config(fg="green",text="volume:"+str(current_volume))
   except Exception as e: 
-    print(e)  
+    print(e)
     song_title_label.config(fg="red",text="track hasn't been selected yet")
-
 
 def reduce_volume():
   try:
@@ -80,8 +76,9 @@ def reduce_volume():
     song_title_label.config(fg="red",text="track hasn't been selected yet")
 
 Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song,activebackground="blue")
-Button2 = tk.Button(master, text="pause", font=("calibri",12), command=pause,activebackground="red")
-Button3 = tk.Button(master, text="resume", font=("calibri",12), command=unpause,activebackground="green")
+Button2 = tk.Button(master, text="Pause", font=("calibri",12), command=pause,activebackground="red")
+Button3 = tk.Button(master, text="Resume", font=("calibri",12), command=unpause,activebackground="green")
+Button6 = tk.Button(master, text="Stop", font=("calibri",12), command=stop,activebackground="green")
 Button4 = tk.Button(master, text="-", font=("calibri",12),width=5, command=reduce_volume,activebackground="orange")
 Button5 = tk.Button(master, text="+", font=("calibri",12),width=5, command=increase_volume,activebackground="orange")
 
@@ -90,15 +87,14 @@ Label2 = tk.Label(master,text="Select your music track please",font=("calibri",1
 Label3 = tk.Label(master,text="VOLUME",font=("calibri",11),fg="red")
 
 song_title_label=Label(master,font=("calibri",12))
-# song_title_label.grid(stick="N",row=3)
 volume_label=Label(master,font=("calibri",12))
-# volume_label.grid(sticky="N",row=5)
 
 song_title.pack()
 Label1.pack(fill="y")
 Button1.pack(fill="x")
 Button2.pack(fill="x")
 Button3.pack(fill="x")
+Button6.pack(fill="x")
 Label3.pack(fill="y")
 Button5.pack(fill="x")
 Button4.pack(fill="x")
