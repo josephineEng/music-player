@@ -26,9 +26,7 @@ directory = askdirectory()
 os.chdir(directory)
 song_list = os.listdir()
 
-index = 0
-count = 0
-
+# setting the playlist
 play_list = tk.Listbox(master, font=("Helvetica", 12, "bold"), bg="green", selectmode=tk.SINGLE)
 
 for song in song_list:
@@ -80,6 +78,8 @@ def reduce_volume():
     print(e)  
     song_title_label.config(fg="red",text="track hasn't been selected yet")
 
+index = 0
+count = 0
 def updatelabel():
   global index
   var.set(song_list[index])
