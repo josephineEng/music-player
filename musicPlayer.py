@@ -1,30 +1,31 @@
 import tkinter as tk
+import os
 from tkinter.constants import END
-from pygame import mixer
 from tkinter import Tk
 from tkinter import Label
 from tkinter import Button
 from tkinter import filedialog
 from tkinter.filedialog import askdirectory
-import os
-
 import pygame
+from pygame import mixer
 
-current_volume = float(0.5)
+
+current_volume = float(0.5) # setting the default volume
 
 #main screen
 master=Tk()
-master.title("MUSIC PLAYER")
-master.geometry("500x450")
+master.title("MUSIC PLAYER") # main title
+master.geometry("600x550") # Size of the player
 
+# title for current song playing
 var = tk.StringVar()
-song_title = tk.Label(master, font="Helvetica 12 bold", textvariable=var)
+song_title = tk.Label(master, font="Helvetica 12 bold", textvariable=var, bg="blue")
 
+# selecting the file to play songs from
 directory = askdirectory()
 os.chdir(directory)
 song_list = os.listdir()
 
-# song_list = []
 index = 0
 count = 0
 
@@ -116,7 +117,7 @@ def previous():
 Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song,activebackground="blue")
 Button2 = tk.Button(master, text="Pause", font=("calibri",12), command=pause,activebackground="red")
 Button3 = tk.Button(master, text="Resume", font=("calibri",12), command=unpause,activebackground="green")
-Button4 = tk.Button(master, text="Stop", font=("calibri",12), command=stop,activebackground="green")
+Button4 = tk.Button(master, text="Stop", font=("calibri",12), command=stop,activebackground="red")
 Button5 = tk.Button(master, text="-", font=("calibri",12),width=5, command=reduce_volume,activebackground="orange")
 Button6 = tk.Button(master, text="+", font=("calibri",12),width=5, command=increase_volume,activebackground="orange")
 Button7 = tk.Button(master, text="NEXT SONG", font=("calibri",12), command=nextsong,activebackground="blue")
