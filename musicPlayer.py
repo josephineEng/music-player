@@ -1,7 +1,7 @@
 import tkinter as tk
-from tkinter.constants import ACTIVE, END, GROOVE, VERTICAL
+from tkinter.constants import END
 from pygame import mixer
-from tkinter import LabelFrame, Scrollbar, StringVar, Tk
+from tkinter import Tk
 from tkinter import Label
 from tkinter import Button
 from tkinter import filedialog
@@ -23,6 +23,10 @@ song_title = tk.Label(master, font="Helvetica 12 bold", textvariable=var)
 directory = askdirectory()
 os.chdir(directory)
 song_list = os.listdir()
+
+# song_list = []
+index = 0
+count = 0
 
 play_list = tk.Listbox(master, font=("Helvetica", 12, "bold"), bg="green", selectmode=tk.SINGLE)
 
@@ -75,12 +79,48 @@ def reduce_volume():
     print(e)  
     song_title_label.config(fg="red",text="track hasn't been selected yet")
 
+def updatelabel():
+  global index
+  var.set(song_list[index])
+
+def nextsong():
+  global index
+  index += 1
+  if (count < index):
+    pygame.mixer.music.load(song_list[index])
+    pygame.mixer.music.play()
+  else:
+    index = 0
+    pygame.mixer.music.load(song_list[index])
+    pygame.mixer.music.play()
+  try:
+    updatelabel()
+  except NameError:
+    print("")
+
+def previous():
+  global index
+  index -= 1
+  if (index < count):
+    pygame.mixer.music.load(song_list[index])
+    pygame.mixer.music.play()
+  else:
+    index = 0
+    pygame.mixer.music.load(song_list[index])
+    pygame.mixer.music.play()
+  try:
+    updatelabel()
+  except NameError:
+    print("")
+
 Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song,activebackground="blue")
 Button2 = tk.Button(master, text="Pause", font=("calibri",12), command=pause,activebackground="red")
 Button3 = tk.Button(master, text="Resume", font=("calibri",12), command=unpause,activebackground="green")
-Button6 = tk.Button(master, text="Stop", font=("calibri",12), command=stop,activebackground="green")
-Button4 = tk.Button(master, text="-", font=("calibri",12),width=5, command=reduce_volume,activebackground="orange")
-Button5 = tk.Button(master, text="+", font=("calibri",12),width=5, command=increase_volume,activebackground="orange")
+Button4 = tk.Button(master, text="Stop", font=("calibri",12), command=stop,activebackground="green")
+Button5 = tk.Button(master, text="-", font=("calibri",12),width=5, command=reduce_volume,activebackground="orange")
+Button6 = tk.Button(master, text="+", font=("calibri",12),width=5, command=increase_volume,activebackground="orange")
+Button7 = tk.Button(master, text="NEXT SONG", font=("calibri",12), command=nextsong,activebackground="blue")
+Button8 = tk.Button(master, text="PREVIOUS SONG", font=("calibri",12), command=previous,activebackground="blue")
 
 Label1 = tk.Label(master,text="CUSTOM MUSIC PLAYER",font=("calibri",15),fg="green")
 Label2 = tk.Label(master,text="Select your music track please",font=("calibri",16),fg="blue")
@@ -94,10 +134,12 @@ Label1.pack(fill="y")
 Button1.pack(fill="x")
 Button2.pack(fill="x")
 Button3.pack(fill="x")
-Button6.pack(fill="x")
-Label3.pack(fill="y")
-Button5.pack(fill="x")
 Button4.pack(fill="x")
+Button7.pack(fill="x")
+Button8.pack(fill="x")
+Label3.pack(fill="y")
+Button6.pack(fill="x")
+Button5.pack(fill="x")
 Label2.pack(fill="y")
 play_list.pack(fill="both", expand="yes")
 

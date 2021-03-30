@@ -19,9 +19,9 @@ master.geometry("500x450")
 
 var = tk.StringVar()
 song_title = tk.Label(master, font="Helvetica 12 bold", textvariable=var)
-
-song_list=[]#creates an empty list to store the songs in the selected folder
+song_list=[]
 index=0
+count=0
 
 directory = askdirectory()
 os.chdir(directory)
@@ -39,7 +39,9 @@ for song in song_list:
     pos += 1
 song_list.reverse()
 
-
+def updatelabel():
+  global index
+  var.set(song_list[index])
 
 
 
@@ -59,18 +61,34 @@ def unpause():
   pygame.mixer.music.unpause()
 
 def nextsong():
-  global index
-  index += 1
-  pygame.mixer.music.load(play_list[index])
-  var.set(play_list[index])
-  pygame.mixer.music.play()
+    global index
+    index += 1
+    if (count < index):
+      pygame.mixer.music.load(song_list[index])
+      pygame.mixer.music.play()
+    else:
+      index = 0
+      pygame.mixer.music.load(song_list[index])
+      pygame.mixer.music.play()
+    try:
+      updatelabel()
+    except NameError:
+      print("")
 
-def previous(): 
-  global index 
-  index -= 1
-  pygame.mixer.music.load(play_list[index])
-  var.set(play_list[index])
-  pygame.mixer.music.play()
+def previous():
+    global index
+    index -= 1
+    if (index < count):
+      pygame.mixer.music.load(song_list[index])
+      pygame.mixer.music.play()
+    else:
+      index = 0
+      pygame.mixer.music.load(song_list[index])
+      pygame.mixer.music.play()
+    try:
+      updatelabel()
+    except NameError:
+      print("")
 
 def increase_volume():
   try:
