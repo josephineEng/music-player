@@ -8,12 +8,14 @@ from tkinter import filedialog
 from tkinter.filedialog import askdirectory
 import pygame
 from pygame import mixer
+from tkinter import messagebox
 
 
 current_volume = float(0.5) # setting the default volume
 
 #main screen
 master=Tk()
+
 master.title("MUSIC PLAYER") # main title
 master.geometry("600x550") # Size of the player
 
@@ -35,6 +37,7 @@ for song in song_list:
 pygame.init()
 pygame.mixer.init()
 
+
 #functions
 def play_song():
   pygame.mixer.music.load(play_list.get(tk.ACTIVE))
@@ -49,6 +52,11 @@ def pause():
 
 def unpause():
   pygame.mixer.music.unpause()
+
+def set_vol(val):
+      volume=int(val)/100 # we divide by 100 to chieve the range from 0-1 used in the mixer
+      mixer.music.set_volume(volume)
+      
 
 def increase_volume():
   try:
@@ -114,6 +122,14 @@ def previous():
   except NameError:
     print("")
 
+
+#volume scale
+scale = tk.Scale(master, from_=0, to=100, orient="horizontal", resolution=1,bg="red",command=set_vol)
+scale.set(50)
+scale.pack
+
+
+
 Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song,activebackground="blue")
 Button2 = tk.Button(master, text="Pause", font=("calibri",12), command=pause,activebackground="red")
 Button3 = tk.Button(master, text="Resume", font=("calibri",12), command=unpause,activebackground="green")
@@ -139,9 +155,12 @@ Button4.pack(fill="x")
 Button7.pack(fill="x")
 Button8.pack(fill="x")
 Label3.pack(fill="y")
+scale.pack(fill="x")
 Button6.pack(fill="x")
 Button5.pack(fill="x")
 Label2.pack(fill="y")
+
 play_list.pack(fill="both", expand="yes")
+
 
 master.mainloop()
