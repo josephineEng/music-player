@@ -9,6 +9,7 @@ from tkinter.filedialog import askdirectory
 import pygame
 from pygame import mixer
 from tkinter import messagebox
+from tkinter import Canvas
 
 
 current_volume = float(0.5) # setting the default volume
@@ -18,6 +19,7 @@ master=Tk()
 
 master.title("MUSIC PLAYER") # main title
 master.geometry("600x550") # Size of the player
+
 
 # title for current song playing
 var = tk.StringVar()
@@ -29,7 +31,7 @@ os.chdir(directory)
 song_list = os.listdir()
 
 # setting the playlist
-play_list = tk.Listbox(master, font=("Helvetica", 12, "bold"), bg="green", selectmode=tk.SINGLE)
+play_list = tk.Listbox(master, font=("Helvetica", 12, "bold"), bg="sky blue", selectmode=tk.SINGLE)
 
 for song in song_list:
   play_list.insert(END, song)
@@ -123,11 +125,40 @@ def previous():
     print("")
 
 
+
 #volume scale
-scale = tk.Scale(master, from_=0, to=100, orient="horizontal", resolution=1,bg="red",command=set_vol)
+scale = tk.Scale(master, from_=0, to=100, orient="horizontal", resolution=1,bg="sky blue",command=set_vol)
 scale.set(50)
 scale.pack
 
+
+#display attributes
+'''
+canvas = Canvas(master,width=500,height=200,bg="sky blue")
+canvas.pack(fill="both", expand="yes")
+
+my_image = tk.PhotoImage(file='C:\\Users\\josephine\\music-player\\music-player\\music_gif.gif')
+canvas.create_image(600,0,anchor ="n", image=my_image)
+'''
+
+
+photo = tk.PhotoImage(file="C:\\Users\\josephine\\music-player\\music-player\\music_gif.gif")
+
+gif_index = 0
+def next_frame():
+    global gif_index
+    try:
+        #XXX: Move to the next frame
+        photo.configure(format="gif -index {}".format(gif_index))
+        gif_index += 1
+    except tk.TclError:
+        gif_index = 0
+        return next_frame()
+    else:
+        master.after(100, next_frame) # XXX: Fixed animation speed
+label = tk.Label(master, image=photo,anchor="n")
+label.pack(fill="x", padx="0",pady="0")
+master.after_idle(next_frame)
 
 
 Button1 = tk.Button(master, text="Play", font=("calibri",12),command=play_song,activebackground="blue")
@@ -148,16 +179,17 @@ volume_label=Label(master,font=("calibri",12))
 
 song_title.pack()
 Label1.pack(fill="y")
-Button1.pack(fill="x")
-Button2.pack(fill="x")
-Button3.pack(fill="x")
-Button4.pack(fill="x")
-Button7.pack(fill="x")
-Button8.pack(fill="x")
+Button1.pack(side="left")
+Button2.pack(side="right")
+Button3.pack(side="left")
+Button4.pack(side="right")
+Button7.pack(side="left")
+Button8.pack(side="right")
+
 Label3.pack(fill="y")
 scale.pack(fill="x")
-Button6.pack(fill="x")
-Button5.pack(fill="x")
+#Button6.pack(fill="x")
+#Button5.pack(fill="x")
 Label2.pack(fill="y")
 
 play_list.pack(fill="both", expand="yes")
